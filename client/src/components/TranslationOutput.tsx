@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Subtitles, Volume2, Languages } from 'lucide-react';
+import { Subtitles, Volume2, Languages, TextSelect } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { TranslationEntry } from '@/types';
@@ -15,19 +15,19 @@ export default function TranslationOutput({ entries }: TranslationOutputProps) {
   const [activeTab, setActiveTab] = useState<'english' | 'russian'>('english');
   const [autoScroll, setAutoScroll] = useState(true);
   const translationAreaRef = useRef<HTMLDivElement>(null);
-  
+
   // Auto-scroll to bottom when new entries are added
   useEffect(() => {
     if (autoScroll && translationAreaRef.current && entries.length > 0) {
       translationAreaRef.current.scrollTop = translationAreaRef.current.scrollHeight;
     }
   }, [entries, autoScroll]);
-  
+
   // Debug - log entries when they change
   useEffect(() => {
     console.log('TranslationOutput - Current entries:', entries);
   }, [entries]);
-  
+
   return (
     <section>
       <div className="bg-card text-card-foreground rounded-lg shadow-md overflow-hidden">
@@ -50,7 +50,7 @@ export default function TranslationOutput({ entries }: TranslationOutputProps) {
             />
           </div>
         </div>
-        
+
         <div className="flex border-b border-border">
           <button
             className={cn(
@@ -77,7 +77,7 @@ export default function TranslationOutput({ entries }: TranslationOutputProps) {
             Russian
           </button>
         </div>
-        
+
         <div 
           ref={translationAreaRef}
           className="h-64 overflow-y-auto p-4 space-y-4 translation-area"
@@ -101,7 +101,7 @@ export default function TranslationOutput({ entries }: TranslationOutputProps) {
                   </div>
                 ))}
               </div>
-              
+
               {/* Russian translation container */}
               <div className={cn("space-y-4", activeTab !== 'russian' && "hidden")}>
                 {entries.map((entry) => (
@@ -118,7 +118,7 @@ export default function TranslationOutput({ entries }: TranslationOutputProps) {
             </>
           ) : (
             <div className="text-center py-8">
-              <Subtitles className="h-12 w-12 text-muted-foreground mx-auto" />
+              <TextSelect className="h-12 w-12 text-muted-foreground mx-auto" />
               <p className="mt-2 text-muted-foreground">No translation data available yet.</p>
               <p className="text-sm text-muted-foreground">
                 Start the video and enable translation to see content here.
