@@ -83,15 +83,26 @@ export const useSpeechRecognition = ({
       recognitionInstance.lang = language;
       
       recognitionInstance.onresult = (event: SpeechRecognitionEvent) => {
-        const resultIndex = event.resultIndex;
-        const result = event.results[resultIndex];
-        
-        if (result && result[0]) {
-          const transcript = result[0].transcript;
+        try {
+          const resultIndex = event.resultIndex;
+          const result = event.results[resultIndex];
           
-          if (result.isFinal) {
-            onTranscript(transcript);
+          console.log('Speech recognition result:', result);
+          
+          if (result && result[0]) {
+            const transcript = result[0].transcript;
+            const confidence = result[0].confidence;
+            
+            console.log(`Speech detected: "${transcript}" (confidence: ${confidence.toFixed(2)})`);
+            
+            // Only send final results to translation (unless interimResults is true)
+            if (result.isFinal || interimResults) {
+              console.log(`Sending transcript for processing: "${transcript}" (isFinal: ${result.isFinal})`);
+              onTranscript(transcript);
+            }
           }
+        } catch (error) {
+          console.error('Error processing speech recognition result:', error);
         }
       };
       

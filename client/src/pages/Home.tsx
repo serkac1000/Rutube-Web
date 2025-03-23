@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { ErrorCircle, Play, Pause, Volume2, VolumeX, Play as PlayIcon } from 'lucide-react';
+// Only importing icons that we actually use
+import { AlertCircle } from 'lucide-react';
 import VideoPlayer from '@/components/VideoPlayer';
 import ControlPanel from '@/components/ControlPanel';
 import StatusPanel from '@/components/StatusPanel';
@@ -46,7 +47,7 @@ export default function Home() {
     clearTranslations,
   } = useTranslation();
   
-  // Speech recognition hook
+  // Speech recognition hook with improved handling
   const {
     recognitionStatus,
     isListening,
@@ -54,10 +55,33 @@ export default function Home() {
     stopListening,
   } = useSpeechRecognition({
     onTranscript: (text) => {
+      console.log(`Speech recognized: "${text}"`);
       if (isTranslating && text.trim()) {
-        translateText(text, player?.getVideoData().video_id);
+        console.log(`Sending for translation: "${text}"`);
+        
+        // Get video ID if player is available
+        const videoId = player?.getVideoData()?.video_id;
+        console.log(`Current video ID: ${videoId || 'unavailable'}`);
+        
+        // Send for translation
+        translateText(text, videoId)
+          .then(entry => {
+            if (entry) {
+              console.log(`Translation successful:`, entry);
+            } else {
+              console.warn(`Translation failed for: "${text}"`);
+            }
+          })
+          .catch(err => {
+            console.error(`Error during translation:`, err);
+          });
+      } else {
+        console.log(`Not translating: isTranslating=${isTranslating}, text=${text.trim() ? 'has content' : 'empty'}`);
       }
     },
+    language: 'en-US',
+    continuous: true,
+    interimResults: true,
   });
   
   // Handle form submission
