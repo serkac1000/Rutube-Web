@@ -1,47 +1,82 @@
-appId: com.rutubeweb.app
+appId: org.rutubewebtranslator.app
 productName: Rutube Web Translator
-copyright: Copyright © 2025
+copyright: Copyright © 2023
 
 directories:
   output: dist-electron
   buildResources: resources
 
 files:
-  - electron.js
-  - server.js
-  - package.json
-  - client/dist/**/*
-  - shared/**/*
-  - server/**/*
-  - "!**/node_modules/**/*"
-  - "!**/.git/**/*"
-  - "!**/src/**/*"
+  - from: .
+    filter:
+      - package.json
+      - electron.js
+      - preload.js
+      - server.js
+      - dist/**/*
+      - resources/**/*
+      - node_modules/**/*
+      - "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+      - "!node_modules/*/{test,__tests__,tests,powered-test,example,examples}"
+      - "!node_modules/*/{.idea,.git,.vscode,.nvmrc,.gitignore}"
+      - "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}"
+      - "!**/._*"
+      - "!**/node_modules/.bin"
+      - "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,__pycache__,thumbs.db,.gitignore,.gitattributes}"
+      - "!**/node_modules/*/{.bin,.editorconfig,.eslintrc*,.gitignore,.travis.yml,appveyor.yml,bower.json,example,examples,gruntfile.js,gulpfile.js,jsdoc.json,karma.conf.js,Makefile,plopfile.js,.github}"
 
-extraResources:
-  - from: resources
-    to: resources
+asar: true
 
 win:
-  target: 
-    - target: nsis
-      arch:
-        - x64
+  target:
+    - nsis
+    - portable
   icon: resources/icon.ico
+  publisherName: Rutube Web Translator
+
+mac:
+  target:
+    - dmg
+  icon: resources/icon.icns
+  category: public.app-category.education
+  darkModeSupport: true
+
+linux:
+  target:
+    - AppImage
+    - deb
+  icon: resources/icon.png
+  category: Education
 
 nsis:
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: true
+  createStartMenuShortcut: true
   shortcutName: Rutube Web Translator
+  installerIcon: resources/icon.ico
+  uninstallerIcon: resources/icon.ico
 
-mac:
-  target: dmg
-  category: public.app-category.video
+dmg:
   icon: resources/icon.icns
+  iconSize: 128
+  window:
+    width: 540
+    height: 380
+  contents:
+    - x: 130
+      y: 190
+      type: file
+    - x: 410
+      y: 190
+      type: link
+      path: /Applications
 
-linux:
-  target: 
-    - AppImage
-  category: Video
-  icon: resources/icon.png
+deb:
+  packageCategory: education
+  priority: optional
+  fpm: ["--description", "A desktop application that provides real-time Russian translation of English speech in YouTube videos"]
+
+appImage:
+  license: LICENSE

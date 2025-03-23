@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Rutube Web Translator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+        }
+        
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin: 0;
+            color: #0077ff;
+        }
+        
+        p {
+            font-size: 1rem;
+            color: #666;
+            max-width: 400px;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 8px;
+            border-radius: 4px;
+            display: block;
+            margin: 1rem auto;
+            position: relative;
+            background: rgba(0, 119, 255, 0.15);
+            overflow: hidden;
+        }
+        
+        .loader::after {
+            content: '';
+            width: 30px;
+            height: 8px;
+            background: #0077ff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+            animation: loading 1.5s linear infinite;
+            border-radius: 4px;
+        }
+        
+        @keyframes loading {
+            0% {
+                left: -30px;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #f5f5f5;
+            }
+            
+            p {
+                color: #aaa;
+            }
+            
+            .loader {
+                background: rgba(0, 119, 255, 0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <svg class="logo" width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <rect width="256" height="256" rx="28" fill="#0077FF"/>
+            <g transform="matrix(0.7,0,0,0.7,38,38)">
+                <rect x="20" y="20" width="180" height="120" rx="10" fill="#FFFFFF"/>
+                <polygon points="90,80 130,100 90,120" fill="#FF0000"/>
+                <rect x="20" y="160" width="180" height="40" rx="5" fill="#FFFFFF"/>
+                <text x="30" y="185" font-family="Arial" font-size="20" fill="#0077FF">RU</text>
+                <text x="70" y="185" font-family="Arial" font-size="20" fill="#333333">→</text>
+                <text x="100" y="185" font-family="Arial" font-size="20" fill="#FF0000">EN</text>
+            </g>
+        </svg>
+        
+        <h1>Rutube Web Translator</h1>
+        <p>Starting application, please wait...</p>
+        
+        <div class="loader"></div>
+    </div>
+</body>
+</html>
