@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" rx="28" fill="#0077FF"/>
+  <g transform="matrix(0.7,0,0,0.7,38,38)">
+    <rect x="20" y="20" width="180" height="120" rx="10" fill="#FFFFFF"/>
+    <polygon points="90,80 130,100 90,120" fill="#FF0000"/>
+    <rect x="20" y="160" width="180" height="40" rx="5" fill="#FFFFFF"/>
+    <text x="30" y="185" font-family="Arial" font-size="20" fill="#0077FF">RU</text>
+    <text x="70" y="185" font-family="Arial" font-size="20" fill="#333333">→</text>
+    <text x="100" y="185" font-family="Arial" font-size="20" fill="#FF0000">EN</text>
+  </g>
+</svg>

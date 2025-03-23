@@ -1,0 +1,47 @@
+appId: com.rutubeweb.app
+productName: Rutube Web Translator
+copyright: Copyright © 2025
+
+directories:
+  output: dist-electron
+  buildResources: resources
+
+files:
+  - electron.js
+  - server.js
+  - package.json
+  - client/dist/**/*
+  - shared/**/*
+  - server/**/*
+  - "!**/node_modules/**/*"
+  - "!**/.git/**/*"
+  - "!**/src/**/*"
+
+extraResources:
+  - from: resources
+    to: resources
+
+win:
+  target: 
+    - target: nsis
+      arch:
+        - x64
+  icon: resources/icon.ico
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  shortcutName: Rutube Web Translator
+
+mac:
+  target: dmg
+  category: public.app-category.video
+  icon: resources/icon.icns
+
+linux:
+  target: 
+    - AppImage
+  category: Video
+  icon: resources/icon.png
