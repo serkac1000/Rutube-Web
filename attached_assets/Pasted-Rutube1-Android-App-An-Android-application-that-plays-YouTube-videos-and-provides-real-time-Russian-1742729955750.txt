@@ -1,0 +1,79 @@
+Rutube1 Android App
+An Android application that plays YouTube videos and provides real-time Russian translation of English speech.
+
+Project Setup
+Requirements
+Android Studio Arctic Fox (2021.3.1) or newer
+Android SDK API Level 33 (Android 13.0)
+Minimum SDK: 24 (Android 7.0)
+JDK 11
+Kotlin 1.8.0
+Import Instructions
+Open Android Studio
+Select "Open an Existing Project"
+Navigate to and select this project's root directory
+Wait for Android Studio to sync and configure the project
+Accept any prompts to install missing SDK components
+Features
+YouTube video playback using ExoPlayer
+Real-time English speech recognition
+English to Russian translation using ML Kit
+Display of translated subtitles in real-time
+Project Structure
+app/src/main/
+├── java/com/example/rutube1/
+│   ├── MainActivity.kt           # Main activity handling UI and user interactions
+│   ├── TranslationManager.kt     # Manages speech recognition and translation
+│   └── VideoManager.kt          # Handles video loading and playback
+└── res/
+    ├── layout/
+    │   └── activity_main.xml    # Main UI layout
+    └── values/
+        └── strings.xml         # String resources
+Implementation Details
+The app uses:
+
+ExoPlayer for video playback
+Google ML Kit for translation
+Android Speech Recognition for speech-to-text
+AndroidX components for UI
+Building and Running
+Sync project with Gradle files
+Build the project (Build > Make Project)
+Run on an emulator or physical device
+Enter a YouTube video URL
+Click "Translate Video" button
+Grant necessary permissions when prompted
+Permissions Required
+Internet access for video streaming
+Microphone access for speech recognition
+Testing
+To test the app:
+
+Enter a valid YouTube video URL
+Click "Translate Video" button
+Allow microphone permissions when prompted
+The video will play with real-time Russian translations
+Troubleshooting
+If you encounter build issues:
+
+Ensure Android SDK is properly configured in Android Studio
+Verify that all required SDK components are installed
+Check that JDK 11 is selected in Project Structure
+Sync project with Gradle files after any configuration changes
+For runtime issues:
+
+Check logcat for detailed error messages
+Verify internet connectivity for video streaming
+Ensure microphone permissions are granted
+Validate that the YouTube URL is correctly formatted
+Migration Guide for MIT App Inventor
+This repository includes a comprehensive migration guide for transitioning from PersonalImageClassifier.aix to TeachableMachine.aix extension in MIT App Inventor.
+
+Guide Contents
+Migration instructions and key differences
+Troubleshooting common issues
+Code samples for implementation
+Detailed testing procedures
+Downloadable migration materials
+Access the guide by opening the docs/index.html file in your browser.
