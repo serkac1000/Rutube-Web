@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { PlayerState, PlayerStatus, YouTubePlayer } from '@/types';
+import { useSpeechRecognition } from './useSpeechRecognition';
+import { useTranslation } from './useTranslation';
 
 declare global {
   interface Window {
@@ -46,6 +48,7 @@ export const useYoutubePlayer = (elementId: string) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [subtitlesEnabled, setSubtitlesEnabled] = useState(false);
   
   const playerReadyRef = useRef(false);
 
@@ -122,6 +125,7 @@ export const useYoutubePlayer = (elementId: string) => {
                   setPlayerStatus('playing');
                   setIsPlaying(true);
                   break;
+
                 case PlayerState.PAUSED:
                   setPlayerStatus('paused');
                   setIsPlaying(false);
@@ -178,6 +182,48 @@ export const useYoutubePlayer = (elementId: string) => {
       setIsMuted(true);
     }
   }, [player]);
+  
+  const {
+    transcript,
+    listening,
+    startListening,
+    stopListening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  const { translate } = useTranslation();
+
+  const [translatedTranscript, setTranslatedTranscript] = useState<string>('');
+  const translatedTranscriptRef = useRef<string>('');
+
+  useEffect(() => {
+    if (!transcript) return;
+    const translateTranscript = async () => {
+      const translated = await translate(transcript, 'en', 'ru');
+      setTranslatedTranscript(translated);
+      translatedTranscriptRef.current = translated;
+    };
+    translateTranscript();
+  }, [transcript, translate]);
+  
+  const enableSubtitles = useCallback(() => {
+    setSubtitlesEnabled(true);
+    
+  }, []);
+
+  const disableSubtitles = useCallback(() => {
+    setSubtitlesEnabled(false);
+    setTranslatedTranscript('')
+  }, []);
+  
+  useEffect(() => {
+    if (isPlaying && subtitlesEnabled) {
+        startListening();
+    } else {
+        stopListening();
+    }
+  }, [isPlaying, subtitlesEnabled, startListening, stopListening]);
 
   return {
     player,
@@ -185,9 +231,13 @@ export const useYoutubePlayer = (elementId: string) => {
     isApiReady,
     isPlaying,
     isMuted,
+    subtitlesEnabled,
     error,
     loadVideoByUrl,
     togglePlay,
     toggleMute,
+    translatedTranscript,
+    enableSubtitles,
+    disableSubtitles
   };
 };

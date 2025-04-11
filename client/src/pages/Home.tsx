@@ -34,6 +34,9 @@ export default function Home() {
     loadVideoByUrl,
     togglePlay,
     toggleMute,
+    subtitles,
+    enableSubtitles,
+    disableSubtitles,
   } = useYoutubePlayer(playerContainerId);
   
   // Translation hook
@@ -152,6 +155,10 @@ export default function Home() {
           containerId={playerContainerId} 
           status={playerStatus} 
           error={playerError}
+          subtitles={subtitles}
+          enableSubtitles={enableSubtitles}
+          disableSubtitles={disableSubtitles}
+
         />
         
         {/* Controls */}
